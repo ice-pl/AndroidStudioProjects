@@ -13,11 +13,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-//    ArrayList<String> states = new ArrayList<String>(Arrays.asList("stop","ready","go","brake"));
+    String red_states[] = new String[] {"red_on", "red_on", "light_off", "light_off"};
+    String yellow_states[] = new String[] {"light_off", "yellow_on", "light_off", "yellow_on"};
+    String green_states[] = new String[] {"light_off", "light_off", "green_on", "light_off"};
+
 
     ImageView red, yellow, green;
     Button red_on, yellow_on, green_on;
-    boolean previous_red;
+
+    Button next;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,50 +40,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         yellow = (ImageView)findViewById(R.id.imageViewY);
         green = (ImageView)findViewById(R.id.imageViewG);
 
-        red_on.setClickable(false);
-        yellow_on.setClickable(true);
-        green_on.setClickable(false);
-        previous_red = true;
+        next = yellow_on;
 
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == red_on.getId()){
-            red.setImageResource(R.drawable.red_on);
-            yellow.setImageResource(R.drawable.light_off);
-            green.setImageResource(R.drawable.light_off);
-
-            red_on.setClickable(false);
-            yellow_on.setClickable(true);
-            green_on.setClickable(false);
-            previous_red = true;
-        }
-        if (v.getId() == yellow_on.getId()){
-            yellow.setImageResource(R.drawable.yellow_on);
-            green.setImageResource(R.drawable.light_off);
-            if( previous_red == true){
-                red_on.setClickable(false);
-                yellow_on.setClickable(false);
-                green_on.setClickable(true);
-            }
-            else{
-                red_on.setClickable(true);
-                yellow_on.setClickable(false);
-                green_on.setClickable(false);
+        if (v.getId() == next.getId()) {
+            i++;
+            i=i%4;
+            System.out.println(i);
+            switch(i) {
+                case 0:
+                    next = yellow_on;
+                    break;
+                case 1:
+                    next = green_on;
+                    break;
+                case 2:
+                    next = yellow_on;
+                    break;
+                case 3:
+                    next = red_on;
+                    break;
             }
         }
+        red.setImageResource(getResources().getIdentifier(red_states[i], "drawable", getPackageName()));
+        yellow.setImageResource(getResources().getIdentifier(yellow_states[i], "drawable", getPackageName()));
+        green.setImageResource(getResources().getIdentifier(green_states[i], "drawable", getPackageName()));
 
-        if (v.getId() == green_on.getId()){
-            red.setImageResource(R.drawable.light_off);
-            yellow.setImageResource(R.drawable.light_off);
-            green.setImageResource(R.drawable.green_on);
-
-            red_on.setClickable(false);
-            yellow_on.setClickable(true);
-            green_on.setClickable(false);
-            previous_red = false;
-        }
     }
 
 }

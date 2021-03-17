@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity{
         counter = (TextView)findViewById(R.id.textView2);
 
 
-        int min =-20;
-        int max = 20;
+        int min =-2000;
+        int max = 2000;
         wylosowana(min, max);
 
 
